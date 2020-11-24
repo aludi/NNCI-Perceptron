@@ -1,0 +1,5 @@
+function experiment()
+    alpha = linspace(0.75,3.0,0.25);
+    for alpha_idx = 0 : len(alpha)
+        success_rate = perceptron_training(alpha[alpha_idx]);
+    end
