@@ -1,10 +1,10 @@
 function success_rate = perceptron_training(N_par, alpha, n_max, generated_par)
     % N = number of dimensions
     % P = number of patterns
-
+    
     N = N_par;
     % calculate P from alpha
-    P = alpha * N;
+    P = round(alpha * N);
     
     
     % n = number of epochs
