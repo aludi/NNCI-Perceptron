@@ -22,28 +22,31 @@ p = P;
 E = 1;
 
 % for the first epoch, pick the first pattern
-chosen_pattern = matrix(1, :);
-lowest_stability_found = -1
-for epoch = 1:n
-   flag = 0;
-   
+chosen_pattern = 1
+
+W = W + 1/N*(matrix(1, N+1) * matrix(1, 1:N))'
+
+lowest_stability_found = 100;
+stability_holder = chosen_pattern;
+for epoch = 1:n   
    for pattern = 1:p
        dot_prod = dot(W, matrix(pattern, 1:N))
        S = matrix(pattern, N+1)
        norm_weights = norm(W)
        stability_pattern = (dot(W, matrix(pattern, 1:N)) * matrix(pattern, N+1))/norm(W)
+       if stability_pattern < lowest_stability_found
+           stability_holder = pattern
+           lowest_stability_found = stability_pattern
+       end
        
    end
-   if stability_pattern < lowest_stability_found
-           W = W + (1/N) * (matrix(pattern_presented, 1:N)' * matrix(pattern_presented, N+1));
-           flag = 1;
-   end
-   if flag == 0
-       %fprintf("All E's are okay (E > 0)  after %d epochs! Done!\n", epoch)
-       success_iter = success_iter + 1;
-       break
-   end
+   W = W + (1/N) * (matrix(stability_holder, 1:N) * matrix(stability_holder, N+1))';
 end
+W
+stability_holder
+lowest_stability_found
+
+generalization_error = 1/pi * acos(dot(W, w_star)/norm(W)*norm(w_star))
 fprintf("Done!\n")
 
 
