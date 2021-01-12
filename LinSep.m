@@ -6,7 +6,7 @@ function mean_error_rate = LinSep(N_par, alpha, n_max, n_generated_sets)
         w = randn(N, 1);
         norm_w = w / norm(w);
         w_star = sqrt(N)*norm_w;
-        norm(w_star)^2 % check: this should be equal to N
+        norm(w_star)^2; % check: this should be equal to N
 
         P = round(alpha*N);
 
@@ -21,7 +21,7 @@ function mean_error_rate = LinSep(N_par, alpha, n_max, n_generated_sets)
 
         W = zeros(N, 1);
         n = n_max;
-        p = P
+        p = P;
         E = 1;
 
         % for the first epoch, pick the first pattern
@@ -29,21 +29,22 @@ function mean_error_rate = LinSep(N_par, alpha, n_max, n_generated_sets)
 
         W = W + 1/N*(matrix(1, N+1) * matrix(1, 1:N))';
 
-        lowest_stability_found = 100;
-        stability_holder = chosen_pattern;
-        for epoch = 1:n   
+        
+        for epoch = 1:n  
+           lowest_stability_found = 100;
+           stability_holder = chosen_pattern;
            for pattern = 1:p
            
-               stability_pattern = (dot(W, matrix(pattern, 1:N)) * matrix(pattern, N+1))/norm(W);
+               stability_pattern = (dot(W, matrix(pattern, 1:N))*matrix(pattern, N+1))/norm(W);
                if stability_pattern < lowest_stability_found
                    stability_holder = pattern;
                    lowest_stability_found = stability_pattern;
                end
-
+              
            end
            W = W + (1/N) * (matrix(stability_holder, 1:N) * matrix(stability_holder, N+1))';
         end
-        W;
+        
         stability_holder;
         lowest_stability_found;
         dot(W, w_star)/(norm(W)*norm(w_star));

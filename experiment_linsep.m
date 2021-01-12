@@ -7,12 +7,12 @@ function experiment_linsep()
     
     %
     
-    N = {4};
-    alpha = 0.25:0.25:5
-    n_max = 1500;
-    n_D = 15;
+    N = {100};
+    alpha = 0.25:0.25:5;
+    n_max = 200;
+    n_D = 20;
     
-    E_g = alpha;  % gets overwritten later
+    
     for N_idx = 1:length(N)
         for alpha_idx = 1 : 20
             error = LinSep(N{N_idx}, alpha(alpha_idx), n_max, n_D);
@@ -25,5 +25,5 @@ function experiment_linsep()
     end
     title("Alpha vs mean-error-rate")
     xlabel("Alpha (ratio of Patterns over Dimensions)")
-    ylabel("Success-rate of training")
+    ylabel("mean-error rate")
     
