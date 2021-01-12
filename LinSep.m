@@ -45,8 +45,8 @@ end
 W
 stability_holder
 lowest_stability_found
-
-generalization_error = 1/pi * acos(dot(W, w_star)/norm(W)*norm(w_star))
+dot(W, w_star)/(norm(W)*norm(w_star))
+generalization_error = 1/pi * acos(dot(W, w_star)/(norm(W)*norm(w_star)))
 fprintf("Done!\n")
 
 
