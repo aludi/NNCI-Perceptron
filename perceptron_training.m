@@ -50,6 +50,6 @@ function success_rate = perceptron_training(N_par, alpha, n_max, generated_par)
         %fprintf("Done!\n")
     end
    success_rate = success_iter / n_generated_sets;
-   %fprintf("Success rate: %f \n", success_rate);
+   fprintf("Success iter %f, success rate: %f \n", success_iter, success_rate);
 end
     
