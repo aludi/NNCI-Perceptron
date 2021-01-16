@@ -36,13 +36,14 @@ function mean_error_rate = LinSep(N_par, alpha, n_max, n_generated_sets)
            for pattern = 1:p
            
                stability_pattern = (dot(W, matrix(pattern, 1:N))*matrix(pattern, N+1))/norm(W);
-               if stability_pattern < lowest_stability_found
+               if stability_pattern <= lowest_stability_found
                    stability_holder = pattern;
                    lowest_stability_found = stability_pattern;
                end
               
            end
            W = W + (1/N) * (matrix(stability_holder, 1:N) * matrix(stability_holder, N+1))';
+           matrix = matrix(randperm(size(matrix,1)), :);
         end
         
         stability_holder;
