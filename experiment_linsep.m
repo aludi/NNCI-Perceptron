@@ -1,3 +1,4 @@
+
 function experiment_linsep()
     % params:
     % N = number of dimensions
@@ -6,24 +7,42 @@ function experiment_linsep()
     % n_D = number of generated samples per pattern size
     
     %
+    upper = 50;
+    N = {10};
+    alpha = 0.25:0.25:upper;
+    n_max = 1000;
+    n_D = 10;
     
-    N = {100};
-    alpha = 0.25:0.25:5;
-    n_max = 200;
-    n_D = 20;
-    
+    alpha_max = upper/0.25;
     
     for N_idx = 1:length(N)
-        for alpha_idx = 1 : 20
-            error = LinSep(N{N_idx}, alpha(alpha_idx), n_max, n_D);
+        for alpha_idx = 1 : alpha_max
+            [error, mean_epoch] = LinSep(N{N_idx}, alpha(alpha_idx), n_max, n_D);
+    
             Q_ls(alpha_idx) = error;
+            epochs_for_alpha(alpha_idx) = mean_epoch;
+            P = round(alpha(alpha_idx)*N{N_idx});
+            expected_error(alpha_idx) = (1/2)* (calculate_capacity_hyperplane(P, N{N_idx}-1)/calculate_capacity_hyperplane(P, N{N_idx}));
         end
-             
-        plot(alpha, Q_ls, '-o'); 
+        %figure(1)     
+        plot(alpha, Q_ls, '-o');
+        %plot(alpha, expected_error);
         hold on
         
+        %figure(2)
+        %plot(alpha, epochs_for_alpha, '-o');
+        %hold on
+
+
+        plot(alpha, expected_error);
+        
     end
-    title("Alpha vs mean-error-rate")
+    %figure(1)
+    title("Generalization Error, Predicted vs Real")
     xlabel("Alpha (ratio of Patterns over Dimensions)")
-    ylabel("mean-error rate")
+    ylabel("Generalization Error")
     
+    %figure(2)
+    %title("Alpha vs epochs per alpha")
+    %xlabel("Alpha (ratio of Patterns over Dimensions)")
+    %ylabel("average epochs needed for max stability")
