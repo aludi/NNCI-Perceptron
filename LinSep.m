@@ -49,7 +49,7 @@ function [mean_error_rate, mean_epoch] = LinSep(N_par, alpha, n_max, n_generated
            W = W + (1/N) * (pattern_matrix(stability_holder, 1:N) * pattern_matrix(stability_holder, N+1))';
           
            angular_change = (1/pi) * acos(dot(old_weights, W)/(norm(old_weights)*norm(W)));
-           if angular_change < 0.02
+           if angular_change < 0.05
                break
            end
            pattern_matrix = pattern_matrix(randperm(size(pattern_matrix,1)), :);   % change the order of examples
